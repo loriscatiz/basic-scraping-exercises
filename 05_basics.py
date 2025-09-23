@@ -56,25 +56,17 @@ def main():
     response = get_response(BASE_URL)
     current_page = 1
     data = {}
-    print("before after first get")
-    print("DATA: ", data)
     if response:
         soup = BeautifulSoup(response.text, "html.parser")
         links = get_authors_links(soup)
         while has_next_page(soup):
-            print("inside links scraping loop")
-            print("DATA: ", data)
             current_page += 1
             response = get_response(f"{BASE_URL}/page/{current_page}")
             if response:
                 soup = BeautifulSoup(response.text, "html.parser")
                 links = get_authors_links(soup, links)
-        print("after links scraping loops")
-        print("DATA: ", data)
 
         for _, link in links.items():
-            print("inside actual scraping loops")
-            print("DATA: ", data)
             response = get_response(link)
             if response:
                 soup = BeautifulSoup(response.text, "html.parser")
